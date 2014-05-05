@@ -1,0 +1,16 @@
+extends ..\layout
+
+block content
+	div.user-register
+		h1 Register yourself
+		div.error= error
+		div.message= message
+		form(method="post" action="/users/register/save")
+			div.form-item
+				label.form-label Your Name
+				input(type="text" name="username")
+			div.form-item
+				label.form-label Your Phone
+				input(type="text" name="phone")
+			div.form-item
+				input(type="submit" value="Register Me")

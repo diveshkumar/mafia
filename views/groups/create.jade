@@ -1,0 +1,12 @@
+extends ..\layout
+
+block content
+	div.group-create
+		h1= title
+		div.error= error
+		div.message= message
+		form(method="post" action="/groups/create/save")
+			div.form-item
+				input(placeholder="Enter group name" name="group" type="text")
+			div.form-item
+				input(type="submit" value="Add Group")
