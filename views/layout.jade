@@ -4,11 +4,11 @@ html(ng-app)
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="/javascripts/jquery.js")
-    script(src="/javascripts/angular.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular-route.min.js")
     script(src="/controllers/groupcontroller.js")
-    script(src="/socket.io/socket.io.js")
+    script(src="/controllers/maincontroller.js")
+    script(src="/javascripts/angular-routes.js")
     
   body
-    div.container(ng-view)
-      block content
-      script(src="/javascripts/custom.js")
+    div.main-info(ng-view)

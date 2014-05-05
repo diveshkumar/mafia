@@ -15,7 +15,11 @@ exports.create = function(req, res) {
 	});
 };
 
-exports.savegroup = function(req, res) {
+exports.modify = function(req, res) {
+	groups.create(req.body, req, res);
+};
+
+exports.remove = function(req, res) {
 	groups.create(req.body, req, res);
 };
 

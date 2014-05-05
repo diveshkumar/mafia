@@ -1,10 +1,9 @@
-/**
- * Angular group controller file.
- */
-function GroupsListController($scope, $http) {
+var groupControllers = angular.module('groupControllers', []);
 
-	$http.get('/json/groups.json').success(function(data) {
-		$scope.artists = data;
-		$scope.artistOrder = 'reknown';
-	});
-}
+groupControllers.controller('ListController', ['$scope', '$http', function($scope, $http) {
+  $http.get('js/data.json').success(function(data){
+    $scope.artists = data;
+    $scope.artistOrder = 'reknown';
+  });
+}]);
+

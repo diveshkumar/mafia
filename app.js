@@ -6,7 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var groups = require('./routes/groups');
-var http = require('http');
+var vote = require('./routes/vote');
 var path = require('path');
 var socketio = require('socket.io');
 var fs = require('fs');
@@ -31,60 +31,21 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', function(req, res){
-	res.render('index');
+	res.sendfile(__dirname + '/views/index.html');
 });
+
+// Declaring Routes for API calls.
+// Groups related URLs
 app.get('/groups', groups.list);
-app.get('/groups/create', groups.create);
-app.post('/groups/create/save', groups.savegroup);
+app.post('/groups/create', groups.create);
+app.post('/groups/modify/:groupId', groups.modify);
+app.post('/groups/remove/:groupId', groups.remove);
+// Users related URLs
 app.get('/users', user.list);
-app.get('/users/register', user.register);
-app.post('/users/register/save', user.save);
-
-var server = http.createServer(app);
-server.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'));
-});
-
-var io = socketio.listen(server);
-var people = [];
-var rooms = [];
-io.set("log level", 1);  
-
-io.sockets.on("connection", function(socket) {
-	if (rooms.length)
-		{
-			io.sockets.emit("rooms", {rooms: rooms});
-		}
-		
-
-	// Creating the room.
-	socket.on('createroom', function(room){
-		if (!_.contains(rooms, room))
-		{
-			rooms.push(room);
-			if (rooms.length)
-			{
-				io.sockets.emit("rooms", {rooms: rooms});
-			}
-		}
-	
-		console.log(socket.manager.rooms);
-	});
-	
-	// Joining the room.
-	socket.on('joinroom', function(roomid) {
-		var room = rooms[roomid];
-		socket.room = room;
-		socket.join(socket.room);
-		people[socket.id] = {room: rooms[roomid], roomid: roomid};
-		
-	});
-	console.log(people);
-
-	
-	
-});
-
-io.sockets.on("disconnect", function(socket) {
-	rooms = [];
-});
+app.post('/users/create', user.create);
+app.post('/users/modify/:userId', user.modify);
+app.post('/users/remove/:userId', user.remove);
+// Vote related URLs
+app.get('/vote/:fromUser/:toUser');
+app.get('/vote/revoke/:fromUser/:toUser');
+module.exports = app;

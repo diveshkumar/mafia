@@ -11,6 +11,6 @@
     "socket.io": "latest",
     "node-redis": "latest",
     "nodemon": "latest",
-    "localStorage": "latest"
+    "angular": "latest"
   }
 }
