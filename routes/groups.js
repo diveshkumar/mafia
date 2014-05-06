@@ -1,8 +1,9 @@
 /*
  * GET home page.
  */
-var groups = require('../groups');
-var users = require('../users')
+var groups = require('../custom_modules/groups');
+var users = require('../custom_modules/users');
+
 exports.list = function(req, res) {
 	res.render('./groups/list', {
 		title : 'My Groups'

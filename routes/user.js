@@ -1,7 +1,7 @@
 /*
  * GET users listing.
  */
-var user = require('../users');
+var user = require('../custom_modules/users');
 
 exports.list = function(req, res) {
 	res.send("respond with a resource");

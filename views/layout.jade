@@ -1,14 +1,10 @@
 doctype html
-html(ng-app)
+html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="/javascripts/jquery.js")
-    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js")
-    script(src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular-route.min.js")
-    script(src="/controllers/groupcontroller.js")
-    script(src="/controllers/maincontroller.js")
-    script(src="/javascripts/angular-routes.js")
-    
+    script(src="/javascripts/angular.min.js")
+    script(src="/javascripts/angular-route.min.js")
   body
-    div.main-info(ng-view)
+    div.main-info

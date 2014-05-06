@@ -1,0 +1,13 @@
+<div class="user-groups container" ng-controller="GroupsController">
+<h1>My Groups</h1>
+<div class="groups-info">
+	<ul class="groups-list">
+		<li ng-repeat="group in groups">
+			<div class="info">
+			 <a href="/#groups/{{group}}">{{group}}</a>
+			</div>
+			<div class="clr"></div>
+		</li>
+	</ul>
+</div>
+</div>

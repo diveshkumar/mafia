@@ -12,7 +12,7 @@ var socketio = require('socket.io');
 var fs = require('fs');
 var app = express();
 var _ = require('underscore');
-
+var mGroups = require("./custom_modules/groups");
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +24,7 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/controllers', express.static(path.join(__dirname, 'controllers')));
+//app.use('/controllers', express.static(path.join(__dirname, 'controllers')));
 // development only
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
@@ -36,16 +36,27 @@ app.get('/', function(req, res){
 
 // Declaring Routes for API calls.
 // Groups related URLs
-app.get('/groups', groups.list);
-app.post('/groups/create', groups.create);
-app.post('/groups/modify/:groupId', groups.modify);
-app.post('/groups/remove/:groupId', groups.remove);
+app.get('/api/groups', function(req, res) {
+	mGroups.getGroups(req, res, function(data) {
+		res.writeHead(200, {"Content-Type": "application/json"});
+		res.end(JSON.stringify(data));
+	});
+});
+app.get('/api/groups/:groupId', function(req, res) {
+	mGroups.getGroupInfo(req.params.groupId, function(data) {
+		res.writeHead(200, {"Content-Type": "application/json"});
+		res.end(JSON.stringify(data));
+	});
+});
+app.post('/api/groups/create', groups.create);
+app.post('/api/groups/modify/:groupId', groups.modify);
+app.post('/api/groups/remove/:groupId', groups.remove);
 // Users related URLs
-app.get('/users', user.list);
-app.post('/users/create', user.create);
-app.post('/users/modify/:userId', user.modify);
-app.post('/users/remove/:userId', user.remove);
+app.get('/api/users', user.list);
+app.post('/api/users/create', user.create);
+app.post('/api/users/modify/:userId', user.modify);
+app.post('/api/users/remove/:userId', user.remove);
 // Vote related URLs
-app.get('/vote/:fromUser/:toUser');
-app.get('/vote/revoke/:fromUser/:toUser');
+app.get('/api/vote/:fromUser/:toUser');
+app.get('/api/vote/revoke/:fromUser/:toUser');
 module.exports = app;
