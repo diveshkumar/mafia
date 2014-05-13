@@ -48,7 +48,7 @@ ul,ol,li {
 	padding: 5px 0;
 }
 
-.form-item input[type=text] {
+.form-item input, .form-item input[type=text] {
 	border: 1px solid #ccc;
 	padding: 4% 2%;
 	max-width: 98%;

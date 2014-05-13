@@ -17,6 +17,10 @@ AngularApp.config(function($routeProvider) {
 		templateUrl : 'javascripts/partials/groups/groupinfo.html',
 		controller : 'GroupInfoController'
 	});
+	$routeProvider.when('/users/login', {
+		templateUrl : 'javascripts/partials/users/login.html',
+		controller : 'LoginController'
+	});
 	$routeProvider.otherwise({
 		redirectTo : '/splash'
 	});
@@ -32,11 +36,11 @@ AngularApp.controller('ListController', function($scope) {
 AngularApp.controller('SplashController', function($scope) {
 	var localStorage = window['localStorage'];
 	if (localStorage.getItem('user') !== null) {
-		$scope.path = '/#/groups';
+		$scope.path = '/#/groups/';
 		$scope.linkTitle = "Play Now";
 	}
 	else {
-		$scope.path = "/#/login";
+		$scope.path = "/#/users/login";
 		$scope.linkTitle = "Validate yourself";
 	}
 });
@@ -53,10 +57,26 @@ AngularApp.controller('GroupsController', function($scope, $http) {
 //Single Groups Controller.
 AngularApp.controller('GroupInfoController', function($scope, $http, $routeParams) {
 	$http.get('/api/groups/' + $routeParams.groupId).success(function(data) {
-		console.log('hldool');
+		$scope.title = 'MyGroup';
 		$scope.groups = data;
 	})
 	.error(function(data) {
 		$scope.groups = [];
 	});
+});
+
+//Single Groups Controller.
+AngularApp.controller('LoginController', function($scope, $http, $location) {
+	$scope.title = "Sign in to Play";
+	$scope.formData = {};
+	var localStorage = window['localStorage'];
+
+	var loggedInUser = localStorage.getItem('user');
+
+
+	$scope.processForm = function() {
+		localStorage.setItem('user', this.formData.phone);
+		$location.path('/groups');
+	}
+
 });

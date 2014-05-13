@@ -1,3 +1,7 @@
-<div class="user-group-info container" ng-controller="GroupInfoController">
-{{params}}
+<div class="user-group-info container">
+<h1>{{title}}</h1>
+<div class="group-members" ng-repeat="g in groups">
+	{{g.name}}
+</div>
+
 </div>
