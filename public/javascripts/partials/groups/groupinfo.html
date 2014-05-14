@@ -1,7 +1,10 @@
-<div class="user-group-info container">
+<div class="user-group-info container" >
 <h1>{{title}}</h1>
-<div class="group-members" ng-repeat="g in groups">
-	{{g.name}}
+
+<div class="group-members">
+	<ul>
+		<li  ng-repeat="grp in groups | uppercase"><a href="/#/user/{{grp.phone}}/" title="{{grp.name}}" >{{grp.name}}</a>&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;<a href="/#/groups/{{groupId}}/members/{{grp.phone}}/remove" title="Remove {{grp.name}}" >{{removeLabel}}</a></li>
+	</ul>
 </div>
 
 </div>

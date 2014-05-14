@@ -6,7 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var redis = require("redis");
 var client = redis.createClient();
-var user = require('./routes/user');
+var users = require('./routes/user');
 var groups = require('./routes/groups');
 var vote = require('./routes/vote');
 var path = require('path');
@@ -41,6 +41,25 @@ app.get('/', function(req, res){
 // Groups related URLs
 app.get('/api/groups', groups.groups);
 app.get('/api/groups/:groupId', groups.groupsById);
+app.post('/api/groups/create', function(req, res){
+  client.sadd('groups:' + req.body.user, req.body.name, redis.print);
+  res.end('Group added successfully.');
+});
+app.post('/api/groups/remove', function(req, res){
+  client.srem('groups:' + req.body.user, req.body.groupId);
+  res.end();
+});
+app.post('/api/groups/members/remove', function(req, res){
+ client.srem('groups:' + req.body.currentUserId + ':' + req.body.groupId + ':members' , 'user:' + req.body.removeUserId + ':information');
+ res.end('User removed from group.');
+});
+app.get('/api/user/:userId', users.user);
+app.get('/api/user/remove/:userId', function(req, res){
+  client.del('user:9350438523:information', function(err, data) {
+    res.end();
+  });
+
+});
 /*app.post('/api/groups/create', groups.create);
 app.post('/api/groups/modify/:groupId', groups.modify);
 app.post('/api/groups/remove/:groupId', groups.remove);

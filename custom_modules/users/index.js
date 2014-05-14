@@ -16,7 +16,7 @@ var Users = {
 			}
 			return count;
 		});
-	
+
 		// If a user is
 		if (!this.isExisting(user)) {
 			client.incr("users:uids");
@@ -26,7 +26,7 @@ var Users = {
 			res.render('./user/register', {
 				message : "You are registered successfully."
 			});
-		} 
+		}
 		else {
 			res.render('./user/register', {
 				error : "Entered phone number is already registered."
@@ -48,10 +48,10 @@ var Users = {
 	},
 	getCurrentUser: function() {
 		var localStorage = '';
-		var userKey = '9650594146';//localStorage.getItem('user');
+		var userKey = '9650594146';
 		var redisKey = 'user:' + (userKey||'') + ':information';
 		var self = this;
-		
+
 		client.hgetall(redisKey, function(err, data) {
 			self.user = data;
 		});
