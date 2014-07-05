@@ -1,0 +1,16 @@
+extends ..\layout
+
+block content
+	div.user-groups
+		h1= title
+		div.error= error
+		div.message= message
+		div.group-info(ng-controller="GroupsListController")
+			ul.groups-list(ng-repeat="item in artists")
+				li
+					div.thumb
+					div.info 
+						a.username {{item.name}}
+						div.small.left Total Members: {{item.members}}
+						div.small.right 
+							a View members

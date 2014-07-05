@@ -1,0 +1,163 @@
+body {
+	font: 14px "Matura MT Script Capital", "Lucida Grande", Helvetica, Arial,
+		sans-serif;
+}
+
+a {
+	color: #333;
+}
+
+ul,ol,li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	padding: 10px;
+	min-height: 480px;
+	background: linear-gradient(#cfcfcf, #369);
+	margin: auto;
+}
+
+.container h1 {
+	text-align: center;
+}
+
+.container {
+	overflow-x: hidden;
+}
+
+.container .logo-placeholder { //
+	background: url(../images/logo_phone.png) center center no-repeat;
+	padding: 250px 100px 100px;
+}
+
+.form-item {
+	margin: 10px 0;
+	padding: 5px 10px;
+	clear: both;
+}
+
+.form-item label {
+	display: block;
+	clear: both;
+	font-weight: bold;
+	padding: 5px 0;
+}
+
+.form-item input, .form-item input[type=text] {
+	border: 1px solid #ccc;
+	padding: 2% 2%;
+	max-width: 98%;
+	width: 96%;
+	font-size:2em;
+}
+
+.form-item input[type=submit],.form-item button {
+	padding: 4% 4%;
+	border: 1px solid #036;
+	cursor: pointer;
+}
+/** User Registrsation **/
+.user-register {
+	
+}
+/** Groups **/
+/** User Registrsation **/
+.user-groups {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.user-groups ul {
+	padding: 0 10px;
+}
+
+.user-groups ul li {
+	padding: 5px;
+	max-width: 96%;
+	margin: 10px 0;
+	background: #c7c7c7;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+}
+
+.user-groups ul li div.info {
+	cursor: pointer;
+	text-align: center;
+	padding: 15px 20px;
+	background: linear-gradient(#ccc, yellow);
+	opacity: 0.6;
+	font-size: 1.7em;
+	color: #333;
+	font-weight: 700;
+	transition: all 0.3s ease-out;
+}
+
+.user-groups ul li div.info:hover {
+	transform: scale(1.5);
+	opacity: 1;
+	border: 3px solid #fff;
+	color: #555;
+}
+
+.btnplay {
+	border: 2px solid #efefef !important;
+	font-size: 2em;
+	background: linear-gradient(#98ee98, #069);
+	padding: 4% 15% !important;
+	border-radius: 25px;
+	color: #fff;
+	margin: auto;
+	width: 150px;
+}
+
+.container .main-page .form-item {
+	width: 150px;
+	margin: auto;
+}
+
+.clr {
+	clear: both;
+}
+.ticket-row {
+     clear: both;
+     font-size: 1.5em;
+     text-align: center;
+     width: 100%;
+}
+
+.ticket-row .ticket-col {
+    border: 1px solid;
+    float: left;
+    height: 32px;
+    max-width: 23px;
+    padding: 5px 4px;
+    width: 23px;
+}
+.engine {border:5px solid #fefefe;background:orange;max-width:70%;margin:auto;padding:35px 25px;text-align:center;border-radius:10px;margin: 20px auto;}	
+.engine .current-number {font-size:12em;transition:1s;}
+.tickets-container {width:99%}
+.game-ticket {
+	width:300px;
+	margin:auto;
+}
+.tickets-container .game-ticket{
+	margin:20px ;
+	float:left;
+}
+h1.big-title {
+	font-size:6em;
+}
+div.user-name {
+	text-align:center;
+}
+div.user-name h3 {
+	font-size: 1.8em;
+	padding: 0;
+	float: left;
+	text-align: center;
+	width: 100%;
+}

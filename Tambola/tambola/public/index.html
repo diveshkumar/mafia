@@ -1,0 +1,44 @@
+<html>
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/jquery.js"></script>
+<title>TERE</title>
+</head>
+<body>
+	<script>
+		var socket = io.connect('http://localhost:3000');
+		var name = '';
+		$(document).ready(function() {
+
+			$('#send').live('click', function() {
+				// If text box is not hidden.
+				if (!$('#nameu').not(':hidden').length) {
+					socket.emit('joined', $('#nameu').val());
+					name = $('#nameu').val();
+				} 
+				else {
+					socket.emit('send_data', {
+						data : $('#text').val()
+					});
+				}
+			});
+			// Receiving data from different browsers.
+			socket.on('received_data', function(data) {
+				$('#chat').append(data);
+			});
+			;
+		});
+	</script>
+	Enter Your Name:
+	<input type='text' id="nameu" />
+	<br />
+	<textarea id="text"></textarea>
+	<button id="send">Send</button>
+	<br />
+	<div id='chat'></div>
+</body>
+</html>
+
+
+
+

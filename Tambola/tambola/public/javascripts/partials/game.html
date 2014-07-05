@@ -1,0 +1,34 @@
+
+<div class="container game-page">
+  <div class="engine ticket">
+    <div class="current-number"></div>
+    <a href="/#/engine">See Engine</a>
+  </div>
+  <div class='game-ticket'>
+    <div class="ticket-row" ng-repeat = "cols in ticket track by $index">
+      <div class="ticket-col" ng-repeat = "c in cols track by $index">{{c}}</div>
+    </div>
+  </div>
+</div>
+<script>
+
+
+
+  $(document).ready(function() {
+
+    // Game ticket clicking.
+    var ticket = $('.game-ticket');
+    
+    $('.game-ticket').on('click', '.ticket-row .ticket-col', function() {
+      $(this).css({'cursor': 'none'});
+      if ($(this).html().length) {
+        $(this).css({'text-decoration': 'line-through', 'background': 'grey', 'color': 'white'});
+        $(this).addClass('marked');
+        Ticket.validateWinning(ticket);
+      }
+    });
+  });
+  
+  
+
+</script>
