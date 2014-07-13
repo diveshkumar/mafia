@@ -1,4 +1,3 @@
-
 <div class="container game-page">
   <div class="engine ticket">
     <div class="current-number"></div>
@@ -11,11 +10,10 @@
   </div>
 </div>
 <script>
-
-
-
   $(document).ready(function() {
-
+    // Emitting to Engine to append new user entry.
+    socket.emit('newUser', {ticket: ''});
+    
     // Game ticket clicking.
     var ticket = $('.game-ticket');
     
@@ -27,6 +25,7 @@
         Ticket.validateWinning(ticket);
       }
     });
+    
   });
   
   

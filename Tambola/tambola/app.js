@@ -9,6 +9,7 @@ var redis = require("redis");
 var client = redis.createClient();
 var path = require('path');
 var socketio = require('socket.io');
+
 var fs = require('fs');
 var app = express();
 var _ = require('underscore');
@@ -40,6 +41,10 @@ app.get('/api/game/ticket', function(req, res) {
   res.json(ticket);
   res.end();
 });
-
+// Showing an engine.
+app.get('/api/game/engine', function(req, res) {
+  res.json({sockets: socketio.sockets});
+  res.end();
+});
 
 module.exports = app;

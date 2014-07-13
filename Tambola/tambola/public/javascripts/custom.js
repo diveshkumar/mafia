@@ -130,7 +130,7 @@ $(document).ready(function() {
 
 
   (function() {
-
+   
     // If game page is there.
     if ($('.game-page').length != 0) {
 
@@ -160,39 +160,9 @@ $(document).ready(function() {
 
     // If engine page is available. 
     else if ($('.engine-page').length > 0) {
-      socket.on('myTicket', function(data) {
+      socket.on('sockets', function(data) {
+        console.log('Current Sockets');
         console.log(data);
-      });
-      socket.on('anotherTicket', function(data) {
-
-        if (data.sockets !== "undefined") {
-          $('.tickets-container h1.big-title').remove();
-          $.each(data.sockets, function(cKey, cValue) {
-
-            var user = 'user-' + cKey;
-            // getting each key for value.
-            var ticket = getCookie(user);
-            console.log(ticket);
-            if (typeof ticket !== "undefined") {
-              ticket = JSON.parse(ticket);
-
-              var output = "<div class='game-ticket'>";
-              $.each(ticket, function(key, value) {
-                output += "<div class='ticket-row'>";
-                $.each(value, function(key, col) {
-                  output += "<div class='ticket-col'>" + col + "</div>";
-                });
-                output += "</div>";
-              });
-              output += "</div>";
-
-            }
-            console.log('--------');
-            console.log(output);
-            console.log('---------');
-            $('.tickets-container').append(output);
-          });
-        }
       });
       ////////////////////////////////////////////////////////////////
       ////// APPENDING TICKET ////////////////////////////////////////

@@ -16,7 +16,7 @@ ul,ol,li {
 .container {
 	padding: 10px;
 	min-height: 480px;
-	background: linear-gradient(#cfcfcf, #369);
+	/*background: linear-gradient(#cfcfcf, #369);*/
 	margin: auto;
 }
 
@@ -28,7 +28,7 @@ ul,ol,li {
 	overflow-x: hidden;
 }
 
-.container .logo-placeholder { //
+.container .logo-placeholder { 
 	background: url(../images/logo_phone.png) center center no-repeat;
 	padding: 250px 100px 100px;
 }
@@ -160,4 +160,33 @@ div.user-name h3 {
 	float: left;
 	text-align: center;
 	width: 100%;
+}
+.user-box {
+  float:left;
+  margin:30px 20px;
+  width:222px;
+}
+.status-bar {
+  border-radius:4px;
+  border:2px solid #9f9f9f;
+  background:greenyellow;
+  float:left;
+  min-width:220px;
+  height:14px;
+}
+.user-box h2 {
+  margin:2px 0;
+  font-size:1.2em;
+  float:left;
+  width:99%;
+  text-align: center;
+}
+.status-bar .percentage {
+  background:linear-gradient(red, yellow);
+  width:30%;
+  float:left;
+  padding:2px 0;
+  height:10px;
+  border-radius:2px  0 0 2px  ;
+  
 }
