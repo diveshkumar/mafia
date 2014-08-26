@@ -36,6 +36,7 @@ class MenuHandler {
       <h2><?php echo __('PII Settings'); ?></h2>
       <p><?php echo __('Select the fields you want to be encrypted while storing in database.'); ?></p>
       <form name='pii-settings-form' method='post'>
+        <?php wp_nonce_field('pii_settings', 'pii_settings_nonce'); ?>
         <input type='hidden' name='type' value='pii_settings' />
         <?php
         $options = $this->getFields();
@@ -52,6 +53,7 @@ class MenuHandler {
       
       <h2><?php echo __('Configure User Meta fields'); ?></h2>
       <form name='pii-custom-fields-form' method='post'>
+        <?php wp_nonce_field('pii_custom_meta_fields', 'pii_custom_meta_fields_nonce'); ?>
         <input type='hidden' name='type' value='pii_custom_meta_fields' />
         <?php
         $custom_fields = $this->getCustomFields();
@@ -70,13 +72,16 @@ class MenuHandler {
    */
   private function _submitHandler() {
     // Checking if this is a valid settings submit handler.
-    if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_settings') {
+    if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_settings' && isset( $_POST['pii_settings_nonce'] ) 
+    || ! wp_verify_nonce( $_POST['pii_settings_nonce'], 'pii_settings' ) ) {
       update_option('pii_fields', $_POST['options']);
       $encryption = new EncryptDecrypt();
       $encryption->updateFields($_POST['options']);
     }
-    else if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_custom_meta_fields') {
-      update_option('pii_custom_meta_fields', trim($_POST['pii_custom_meta_fields']));
+    // Meta fields saving.
+    else if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_custom_meta_fields' && isset( $_POST['pii_custom_meta_fields_nonce'] ) 
+    || ! wp_verify_nonce( $_POST['pii_custom_meta_fields_nonce'], 'pii_custom_meta_fields' ) ) {
+      update_option('pii_custom_meta_fields', trim($_POST['pii_custom_meta_fields'])); 
     }
   }
 
