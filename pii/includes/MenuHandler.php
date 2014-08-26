@@ -49,6 +49,18 @@ class MenuHandler {
         print submit_button();
         ?>
       </form>
+      
+      <h2><?php echo __('Configure User Meta fields'); ?></h2>
+      <form name='pii-custom-fields-form' method='post'>
+        <input type='hidden' name='type' value='pii_custom_meta_fields' />
+        <?php
+        $custom_fields = $this->getCustomFields();
+        ?>
+        <div><label for='pii_custom_meta_fields'><?php echo __('Provide a separated list of multiple user meta keys to apply encryption.'); ?></br></label><textarea cols='80' rows='10' id='pii_custom_meta_fields' name='pii_custom_meta_fields'><?php print $custom_fields;?></textarea></div>
+        <?php 
+        print submit_button();
+        ?>
+      </form>
     </div>
     <?php
   }
@@ -63,6 +75,9 @@ class MenuHandler {
       $encryption = new EncryptDecrypt();
       $encryption->updateFields($_POST['options']);
     }
+    else if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_custom_meta_fields') {
+      update_option('pii_custom_meta_fields', trim($_POST['pii_custom_meta_fields']));
+    }
   }
 
   /**
@@ -71,15 +86,34 @@ class MenuHandler {
    */
   public function getFields($key = FALSE) {
     $fields = array(
-      'meta_first_name' => __('First Name'),
-      'meta_last_name' => __('Last Name'),
-      'user_email'    => __('Email ID'),
-      'display_name'  => __('Display Name')
+      'user_email'    => __('user_email'),
+      'display_name'  => __('display_name')
     );
-    
-    return ($key === TRUE) ?  array_keys($fields) : $fields;
+    $custom_meta_fields = get_option('pii_custom_meta_fields');
+    $custom_meta_fields = !empty($custom_meta_fields) ? explode(",", $custom_meta_fields) : $custom_meta_fields;
+    array_walk($custom_meta_fields, array($this, '_formatMetaFields'));
+    $fields = (!empty($custom_meta_fields) && !empty($fields)) ? array_merge(array_keys($fields), $custom_meta_fields) : $fields;
+    $fields = array_combine($fields, $fields);
+    return ($key === TRUE) ?  $fields : $fields;
   }
 
+  /**
+   * @method
+   * Method would return list fields to be shown on settings page.
+   */
+  public function getCustomFields($key = FALSE) {
+    $custom_fields = get_option('pii_custom_meta_fields');
+    return $custom_fields;
+  }
+  
+  /**
+   * @method
+   * Method will format MEta fields.
+   * 
+   */
+  private function _formatMetaFields(&$value) {
+    $value = 'meta_' . $value;
+  }
 }
 
 $menuHandler = new MenuHandler();

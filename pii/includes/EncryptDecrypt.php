@@ -10,6 +10,7 @@
 /**
  * Class manages Encryption/Decryption of Database fields.
  */
+
 class EncryptDecrypt {
 
   /**
@@ -81,7 +82,7 @@ class EncryptDecrypt {
     // Decrypt all fields.
     //array_walk($fields, array($this, '_modifyUserData'));
     global $wpdb;
-    $fields = get_option('pii_fields');
+    //$fields = get_option('pii_fields');
     // Separating core fields. 
     $core_fields = !empty($fields) ? preg_grep("/meta_/i", $fields, PREG_GREP_INVERT) : '';
     // Separating Meta fields.
@@ -176,6 +177,8 @@ class EncryptDecrypt {
     $fields = $this->menu->getFields(TRUE);
     // Separating core fields. 
     return preg_grep("/meta_/i", $fields);
+    
+    
   }
 
 }
