@@ -58,9 +58,11 @@ class MenuHandler {
         <?php
         $custom_fields = $this->getCustomFields();
         ?>
-        <div><label for='pii_custom_meta_fields'><?php echo __('Provide a separated list of multiple user meta keys to apply encryption.'); ?></br></label><textarea cols='80' rows='10' id='pii_custom_meta_fields' name='pii_custom_meta_fields'><?php print $custom_fields;?></textarea></div>
+        <div>
+            <label for='pii_custom_meta_fields'><?php echo __('Provide a "," separated list of multiple user meta keys to apply encryption. <br/> E.g. <b>first_name,last_name</b> etc.'); ?></br></label>
+            <textarea cols='80' rows='10' id='pii_custom_meta_fields' name='pii_custom_meta_fields'><?php print $custom_fields;?></textarea></div>
         <?php 
-        print submit_button();
+        print submit_button('Add usermeta fields');
         ?>
       </form>
     </div>
