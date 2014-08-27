@@ -44,7 +44,7 @@ class MenuHandler {
         foreach ($options as $id => $label) {
           $is_checked = !empty($fields) ? (in_array($id, $fields) ? " checked": "") : '';
           ?>
-          <div><label for='<?php print $id; ?>'><input type='checkbox' name='options[]' value='<?php print $id; ?>' <?php print $is_checked;?> /> <?php print $label; ?></label><br/></div>
+          <div><label for='<?php print $id; ?>'><input type='checkbox' name='options[]' value='<?php print $id; ?>' <?php print $is_checked;?> /> <?php print str_replace('meta_', "", $label); ?></label><br/></div>
         <?php
         }
         print submit_button();
@@ -72,15 +72,15 @@ class MenuHandler {
    */
   private function _submitHandler() {
     // Checking if this is a valid settings submit handler.
-    if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_settings' && isset( $_POST['pii_settings_nonce'] ) 
-    || ! wp_verify_nonce( $_POST['pii_settings_nonce'], 'pii_settings' ) ) {
+    if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_settings' && (isset( $_POST['pii_settings_nonce'] ) 
+    || wp_verify_nonce( $_POST['pii_settings_nonce'], 'pii_settings' )) ) {
       update_option('pii_fields', $_POST['options']);
       $encryption = new EncryptDecrypt();
       $encryption->updateFields($_POST['options']);
     }
     // Meta fields saving.
-    else if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_custom_meta_fields' && isset( $_POST['pii_custom_meta_fields_nonce'] ) 
-    || ! wp_verify_nonce( $_POST['pii_custom_meta_fields_nonce'], 'pii_custom_meta_fields' ) ) {
+    else if (!empty($_POST) && isset($_POST['type']) && $_POST['type'] == 'pii_custom_meta_fields' && (isset( $_POST['pii_custom_meta_fields_nonce'] ) 
+    || wp_verify_nonce( $_POST['pii_custom_meta_fields_nonce'], 'pii_custom_meta_fields' )) ) {
       update_option('pii_custom_meta_fields', trim($_POST['pii_custom_meta_fields'])); 
     }
   }
