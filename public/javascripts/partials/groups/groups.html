@@ -1,0 +1,20 @@
+<div class="user-groups container">
+<h1>My Groups</h1>
+<div class="groups-info">
+	<div class='link'>
+		<a href='/#/groups/create/'>{{labels.create}}</a>
+	</div>
+	<ul class="groups-list">
+		<li ng-repeat="group in groups">
+			<div class="info">
+			 <a href="/#/groups/{{group}}">{{group}}</a>
+				<div class="removebutton">
+				 <a href="/#/groups/remove/{{group}}">{{labels.remove}}</a>
+				</div>
+			</div>
+			<div class="clr"></div>
+		</li>
+	</ul>
+
+</div>
+</div>

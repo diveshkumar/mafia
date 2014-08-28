@@ -1,0 +1,12 @@
+// User Information it will store a multi-hash
+user:PHONE:information
+{name, phone, otherdetails (optional, phase 2))
+
+// Groups Information
+groups:PHONE
+
+// Individual Group Members
+groups:PHONE:GROUP_ID:members {return phones}
+
+// Individiual Group Details
+groups:PHONE:GROUP_ID:details

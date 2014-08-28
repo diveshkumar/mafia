@@ -1,0 +1,15 @@
+<script src="/javascripts/custom.js"></script>
+<div class="container engine-page">
+  <div class='tickets-container'>
+    <h1 class='big-title'>No players have joined!!!</h1>
+  </div>
+</div>
+<script>
+  // Appending new user to HTML page.
+  socket.on('newUserAppend', function(data) {
+    var user = getCookie('user-' + data.newSocket);
+    var name = getCookie('user-' + data.newSocket + '-name');
+    var prevHTML = $('.tickets-container').html();
+    $('.tickets-container').append("<div class='user-box'><h2>" + atob(name) + "</h2><div class='status-bar' id='user-" + data.newSocket + "-status-bar'><div class='percentage'></div></div>")
+  })
+</script>

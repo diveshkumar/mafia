@@ -1,0 +1,20 @@
+<div class="group-register" ng-controller="GroupsCreateController">
+<h1>{{title}}</h1>
+<div class="error"></div>
+
+<div class="message"></div>
+
+<form ng-submit="saveGroup()">
+
+<div class="form-item">
+<input placeholder="Enter Group Name" autofocus name="name"  ng-model="formData.name"/>
+<input placeholder="User phone" name="phone"  ng-model="formData.user"/>
+</div>
+
+
+<button type="submit" class="btn btn-success btn-lg btn-block">
+<span class="glyphicon glyphicon-flash"></span> Submit!
+</button>
+
+</form>
+</div>
