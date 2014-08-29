@@ -112,9 +112,10 @@ class EncryptDecrypt {
   private function _modifyMetaUserFields($fields) {
     $users = get_users();
     $meta_fields = $this->getMetaFields(TRUE);
-    $this->_updateUser($users, $core_fields, FALSE);
-    $users = get_users();
-    $this->_updateUser($users, $fields);
+//    $core_fields = $this->getCoreFields(TRUE);
+//    $this->_updateUser($users, $core_fields, FALSE);
+//    $users = get_users();
+//    $this->_updateUser($users, $core_fields);
     // Updating Meta fields.
     $this->_updateUserMeta($users, $meta_fields, FALSE);
     $this->_updateUserMeta($users, $fields);
@@ -177,8 +178,11 @@ class EncryptDecrypt {
     $fields = $this->menu->getFields(TRUE);
     // Separating core fields. 
     return preg_grep("/meta_/i", $fields);
-    
-    
   }
 
+  public function get_meta_field_name(&$val) {
+        if (!empty($val) && is_string($val)) {
+            $val = str_replace('meta_', '', $val);
+        }
+    }
 }
