@@ -61,10 +61,14 @@ if (is_plugin_active('pii/pii.php')) {
      */
     function my_custom_user_email($temp, $email) {
         $encryption = new encryptDecrypt();
-        if (!empty($_POST['email'])) {
-            $email = $encryption->encrypt($encryption->decrypt($email));
-        }else {
-            $email = $encryption->decrypt($email);
+        // get PII fields
+        $pii_fields = get_option('pii_fields');
+        if (!empty($pii_fields) && in_array('user_email', $pii_fields)) {
+            if (!empty($_POST['email']) || !empty($_POST['user_email'])) {
+                $email = $encryption->encrypt($encryption->decrypt($email));
+            } else {
+                $email = $encryption->decrypt($email);
+            }
         }
         //print_r($_POST);exit;
         return $email;
@@ -94,7 +98,6 @@ if (is_plugin_active('pii/pii.php')) {
      */
     function get_data_by($field, $value) {
         global $wpdb;
-
         if ('id' == $field) {
             // Make sure the value is numeric to avoid casting objects, for example,
             // to int 1.
@@ -150,33 +153,15 @@ if (is_plugin_active('pii/pii.php')) {
     add_filter('get_userdata', 'custom_get_user_by', 666, 1);
     add_filter('get_user_metadata', 'custom_get_user_metadata', 666, 4);
     add_filter('esc_html', 'custom_esc_html', 666, 2);
+    add_filter('attribute_escape', 'custom_attribute_escape', 666, 2);
+    
+    //add_filter('pre_user_display_name','custom_pre_user_display_name', 666, 1);
+//    add_filter('pre_user_last_name','custom_pre_user_last_name', 666, 1);
+//    add_filter('pre_user_nickname','custom_pre_user_nickname', 666, 1);
+    
     add_action('init', 'custom_user_obj', 666);
-    add_action('edit_user_profile_update', 'my_custom_edit_user_profile_update', -1, 1);
-    add_action('personal_options_update', 'my_custom_edit_user_profile_update', -1, 1);
     add_action('show_user_profile', 'my_custom_profile_fields');
     add_action('edit_user_profile', 'my_custom_profile_fields');
-
-    /**
-     * Encrypt User Meta Data.
-     * @param type $user_id
-     */
-    function my_custom_edit_user_profile_update($user_id) {
-        //print_r($_POST);
-        $pii_fields = get_option('pii_fields');
-        $meta_fields = !empty($pii_fields) ? preg_grep("/meta_/i", $pii_fields) : '';
-        if (is_array($meta_fields) && !empty($meta_fields)) {
-            array_walk($meta_fields, get_meta_field_name);
-        }
-        $pii_user_fields = !empty($pii_fields) ? preg_grep("/meta_/i", $pii_fields,PREG_GREP_INVERT) : '';
-        $all_pii_fields = array_merge($pii_user_fields,$meta_fields);
-        if (!empty($all_pii_fields) && !empty($_POST) && $user_id) {
-            $encryption = new EncryptDecrypt();
-            foreach ($all_pii_fields as $pii_field) {
-                $_POST[$pii_field] = !empty($_POST[$pii_field]) ? $encryption->encrypt($encryption->decrypt(esc_attr($_POST[$pii_field]))) : '';
-            }
-        }
-        //print_r($_POST);exit;
-    }
 
     /**
      * Apply filters on current user object for Edit user screen.
@@ -191,7 +176,7 @@ if (is_plugin_active('pii/pii.php')) {
         }
     }
 
-    function custom_get_user_by($value = 0, $field = 'id') { 
+    function custom_get_user_by($value = 0, $field = 'id') {
         $userdata = get_data_by($field, $value);
 
         if (!$userdata)
@@ -207,11 +192,7 @@ if (is_plugin_active('pii/pii.php')) {
 
     function custom_get_user_metadata($temp = null, $object_id, $meta_key, $single) {
         global $wpdb;
-        $pii_fields = get_option('pii_fields');
-        $meta_fields = !empty($pii_fields) ? preg_grep("/meta_/i", $pii_fields) : '';
-        if (is_array($meta_fields) && !empty($meta_fields)) {
-            array_walk($meta_fields, get_meta_field_name);
-        }
+        $meta_fields = get_usermeta_fields_for_pii();
         //print_r($meta_fields);
         if (!empty($meta_fields) && in_array($meta_key, $meta_fields)) {
             if (!$custom_user = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM $wpdb->usermeta WHERE user_id = %s AND meta_key = %s", array($object_id, $meta_key)), OBJECT)) {
@@ -261,9 +242,52 @@ if (is_plugin_active('pii/pii.php')) {
         }
     }
 
-    function custom_esc_html($safe_text, $text){
+    function custom_esc_html($safe_text, $text) {
         $encryption = new encryptDecrypt();
         $safe_text = $encryption->decrypt($safe_text);
         return $safe_text;
     }
+    
+    function custom_attribute_escape($safe_text, $text) {
+        $encryption = new encryptDecrypt();
+        $safe_text = $encryption->decrypt($safe_text);
+        return $safe_text;
+    }
+    
+    function get_usermeta_fields_for_pii() {
+        $pii_fields = get_option('pii_fields');
+        $meta_fields = !empty($pii_fields) ? preg_grep("/meta_/i", $pii_fields) : '';
+        if (is_array($meta_fields) && !empty($meta_fields)) {
+            array_walk($meta_fields, get_meta_field_name);
+        }
+        return $meta_fields;
+    }
+
+    function get_user_fields_for_pii() {
+        $pii_fields = get_option('pii_fields');
+        $user_fields = !empty($pii_fields) ? preg_grep("/meta_/i", $pii_fields, PREG_GREP_INVERT) : array();
+        return $user_fields;
+    }
+    
+    add_action('added_user_meta', 'custom_added_user_meta', -1, 4);
+    add_action('updated_user_meta', 'custom_added_user_meta', -1, 4);
+    
+    /**
+     * Encrypt User Meta Data.
+     * @param type $user_id
+     */
+
+    function custom_added_user_meta($mid, $object_id, $meta_key, $_meta_value){ 
+        $meta_fields = get_usermeta_fields_for_pii();
+        //print_r($meta_fields);    
+        if (!empty($meta_fields) && in_array($meta_key, $meta_fields)) { 
+            $encryption = new encryptDecrypt();
+            $meta_value = $encryption->encrypt($encryption->decrypt($_meta_value));
+            update_user_meta($object_id, $meta_key, $meta_value);
+        }  
+    }
+    
+//    function custom_pre_user_display_name($display_name){
+//        return $display_name;
+//    }
 }
