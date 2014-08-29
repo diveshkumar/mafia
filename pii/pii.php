@@ -76,7 +76,7 @@ if (is_plugin_active('pii/pii.php')) {
 
     function getCurrentUrl() {
         $pageURL = 'http';
-        if ($_SERVER["HTTPS"] == "on") {
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
             $pageURL .= "s";
         }
         $pageURL .= "://";
@@ -258,7 +258,7 @@ if (is_plugin_active('pii/pii.php')) {
         $pii_fields = get_option('pii_fields');
         $meta_fields = !empty($pii_fields) ? preg_grep("/meta_/i", $pii_fields) : '';
         if (is_array($meta_fields) && !empty($meta_fields)) {
-            array_walk($meta_fields, get_meta_field_name);
+            array_walk($meta_fields, 'get_meta_field_name');
         }
         return $meta_fields;
     }
