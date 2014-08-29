@@ -94,7 +94,7 @@ class MenuHandler {
   public function getFields($key = FALSE) {
     $fields = array(
       'user_email'    => __('user_email'),
-      'display_name'  => __('display_name')
+      //'display_name'  => __('display_name')
     );
     $custom_meta_fields = get_option('pii_custom_meta_fields');
     $custom_meta_fields = !empty($custom_meta_fields) ? explode(",", $custom_meta_fields) : $custom_meta_fields;
