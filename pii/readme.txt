@@ -1,13 +1,14 @@
 === PII ===
 Contributors: Madhu Sudan, Divesh Kumar
-Tags: users, encryption, encrypt user pii data, user data
+Tags: users, encryption, encrypt user pii data, user data, secure user data, hide user personal information, Personally identifiable information
 Requires at least: 3.0
 Tested up to: 3.9
 
 PII plugin provides options to encrypt User's PII data.
 
 == Description ==
-This plugin helps to encrypt data using Base 64 encoding. For core fields we have taken care of only email_address and there is a provision of adding custom meta fields as well.
+This plugin helps to encrypt data using PHP's "openssl_encrypt" method. AES-256-CBC is used as cipher method and SHA256 for genrating Vector.
+For core fields we have taken care of only email_address and there is a provision of adding custom meta fields as well.
 
 
 
