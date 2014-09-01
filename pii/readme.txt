@@ -1,6 +1,6 @@
-=== PII ===
+=== PII Manager===
 Contributors: Madhu Sudan, Divesh Kumar
-Tags: users, encryption, encrypt user pii data, user data
+Tags: users, encryption, encrypt user pii data, user data, secure user data, hide user personal information, Personally identifiable information
 Requires at least: 3.0
 Tested up to: 3.9
 
@@ -8,7 +8,6 @@ PII plugin provides options to encrypt User's PII data.
 
 == Description ==
 This plugin helps to encrypt data using AES encryption with support of SHA-256. For core fields we have taken care of only email_address and there is a provision of adding custom meta fields as well.
-
 
 
 
@@ -21,7 +20,7 @@ PS: Before putting user meta data fields, you must know the exact meta_key name 
 3) Go to PII settings.
 4) Choose user data which you want to encrypt.
 
-1, 2, 3: You're done!
+1, 2, 3, 4: You're done!
 
 == Frequently Asked Questions
 = How does this module enables encryption?
