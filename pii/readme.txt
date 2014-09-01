@@ -1,4 +1,4 @@
-=== PII ===
+=== PII Manager===
 Contributors: Madhu Sudan, Divesh Kumar
 Tags: users, encryption, encrypt user pii data, user data, secure user data, hide user personal information, Personally identifiable information
 Requires at least: 3.0
@@ -22,7 +22,7 @@ PS: Before putting user meta data fields, you must know the exact meta_key name 
 3) Go to PII settings.
 4) Choose user data which you want to encrypt.
 
-1, 2, 3: You're done!
+1, 2, 3, 4: You're done!
 
 == Frequently Asked Questions
 = How does this module enables encryption?
