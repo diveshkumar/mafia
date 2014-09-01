@@ -7,9 +7,7 @@ Tested up to: 3.9
 PII plugin provides options to encrypt User's PII data.
 
 == Description ==
-This plugin helps to encrypt data using PHP's "openssl_encrypt" method. AES-256-CBC is used as cipher method and SHA256 for genrating Vector.
-For core fields we have taken care of only email_address and there is a provision of adding custom meta fields as well.
-
+This plugin helps to encrypt data using AES encryption with support of SHA-256. For core fields we have taken care of only email_address and there is a provision of adding custom meta fields as well.
 
 
 
